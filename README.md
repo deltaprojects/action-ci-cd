@@ -10,7 +10,7 @@ requires tilt, kubectl and docker. However you should probably have helm and ran
 Usage
 
 ```yaml
-    - uses: deltaprojects/action-tilt-auth-push@master
+    - uses: deltaprojects/action-tilt-auth-bpd@master
       with:
         # either rancher-*
         rancher-context: ${{ secrets.RANCHER_CONTEXT }} # Rancher context i.e. cluster-id:project-id
