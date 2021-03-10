@@ -30,8 +30,8 @@ runs:
     - name: configure kubectl from secret
       shell: bash
       run: |
-        if ! [[ -z "${{ inputs.rancher-context }}" || -z "${{ inputs.rancher-token }}" || -z "${{ inputs.rancher-url }}" ]]; then
-          mkdir -p ${HOME}/.kube && echo "${{ inputs.kube-config }}" | base64 -d > ${HOME}/.kube
+        if ! [[ -z "${{ inputs.kube-config }}" ]]; then
+          mkdir -p ${HOME}/.kube/ && echo "${{ inputs.kube-config }}" | base64 -d > ${HOME}/.kube/config
         fi
 
     - name: configure kubectl from Rancher API key
