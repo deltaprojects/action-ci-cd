@@ -1,0 +1,6 @@
+syncs:
+  - repos:
+      - deltaprojects/hello-kubernetes
+    files:
+      - src: workflows/build-and-deploy.yaml
+        dest: .github/workflows/build-and-deploy.yaml
