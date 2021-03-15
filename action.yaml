@@ -45,6 +45,7 @@ runs:
     - name: Build, push and deploy
       shell: bash
       run: |
+        echo setting buildx to use ${{ steps.buildx.outputs.name }} instance.
         docker buildx use --default --global ${{ steps.buildx.outputs.name }}
         tilt ci
 
