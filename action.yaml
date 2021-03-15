@@ -17,10 +17,6 @@ inputs:
     description: 'A base64 encoded kubectl config'
     required: false
     default: ''
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
 runs:
   # ${{ github.action_path }} == root of repo
   # ${{ inputs.name-of-input }} == inputs defined above
@@ -48,4 +44,15 @@ runs:
 
     - name: Build, push and deploy
       shell: bash
-      run: tilt ci
+      run: |
+        docker buildx use --default --global ${{ steps.buildx.outputs.name }}
+        tilt ci
+
+    - name: Move cache (work-around)
+      # Temp fix
+      # https://github.com/docker/build-push-action/issues/252
+      # https://github.com/moby/buildkit/issues/1896
+      shell: bash
+      run: |
+        rm -rf /tmp/.buildx-cache
+        mv /tmp/.buildx-cache-new /tmp/.buildx-cache
