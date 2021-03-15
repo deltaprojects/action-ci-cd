@@ -50,9 +50,47 @@ jobs:
     - name: Install kube tools
       uses: yokawasa/action-setup-kube-tools@v0.4.0
 
-    - name: auth with k8s, build, push & deploy with tilt
-      uses: deltaprojects/action-tilt-auth-bpd@master
-      with:
-        rancher-context: ${{ secrets.RANCHER_CONTEXT }}
-        rancher-token: ${{ secrets.RANCHER_TOKEN }}
-        rancher-url: ${{ secrets.RANCHER_URL }}
+    # commenting out, context actions are severely limited.
+    # - name: auth with k8s, build, push & deploy with tilt
+    #   uses: deltaprojects/action-tilt-auth-bpd@master
+    #   with:
+    #     rancher-context: ${{ secrets.RANCHER_CONTEXT }}
+    #     rancher-token: ${{ secrets.RANCHER_TOKEN }}
+    #     rancher-url: ${{ secrets.RANCHER_URL }}
+
+    # - name: configure kubectl from secret
+    #   shell: bash
+    #   run: |
+    #     if ! [[ -z "${{ secrets.KUBE_CONFIG }}" ]]; then
+    #       mkdir -p ${HOME}/.kube/ && echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ${HOME}/.kube/config
+    #     fi
+
+    - name: configure kubectl from Rancher API key
+      shell: bash
+      run: |
+        if ! [[ -z "${{ secrets.RANCHER_CONTEXT }}" || -z "${{ secrets.RANCHER_CONTEXT }}" || -z "${{ secrets.RANCHER_URL }}" ]]; then
+          rancher login --skip-verify --context ${{ secrets.RANCHER_CONTEXT }} --token ${{ secrets.RANCHER_TOKEN }} ${{ secrets.RANCHER_URL }}
+          mkdir -p ${HOME}/.kube
+          rancher kubectl config view --minify --raw > ${HOME}/.kube/config
+          KUBE_CLUSTER_URL=$(kubectl config view --minify -o 'jsonpath={.clusters[0].cluster.server}')
+          KUBE_CONTEXT=$(kubectl config view --minify -o 'jsonpath={.current-context}')
+          kubectl config set-cluster ${KUBE_CONTEXT} --insecure-skip-tls-verify=true --server=${KUBE_CLUSTER_URL}
+        else
+          echo needs secrets RANCHER_CONTEXT, RANCHER_CONTEXT and RANCHER_URL
+          exit 1
+        fi
+
+    - name: Build, push and deploy
+      shell: bash
+      run: |
+        docker buildx use --default --global ${{ steps.buildx.outputs.name }}
+        tilt ci
+
+    - name: Move cache (work-around)
+      # Temp fix
+      # https://github.com/docker/build-push-action/issues/252
+      # https://github.com/moby/buildkit/issues/1896
+      shell: bash
+      run: |
+        rm -rf /tmp/.buildx-cache
+        mv /tmp/.buildx-cache-new /tmp/.buildx-cache
