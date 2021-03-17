@@ -23,8 +23,8 @@ jobs:
       # Something like this:
       # custom_build(
       #   'ghcr.io/ORGNAME/REPO',
-      #   'docker buildx build -t $EXPECTED_REF -f Dockerfile --cache-from type=local,src=/tmp/.buildx-cache --cache-to type=local,dest=/tmp/.buildx-cache --push ./',
-      #   ['./'],
+      #   'docker buildx build -t $EXPECTED_REF -t ORGNAME/REPO:latest -f Dockerfile --cache-from type=local,src=/tmp/.buildx-cache --cache-to type=local,dest=/tmp/.buildx-cache-new --push ./',
+      #   ['.'],
       #   skips_local_docker=True,
       #   disable_push=True,
       # )
