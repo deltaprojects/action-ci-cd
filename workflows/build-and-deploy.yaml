@@ -4,6 +4,11 @@ on:
     branches:
       - main
       - master
+    paths-ignore:
+    - 'docs/**'
+    - '**/README.md'
+    - '**/LICENSE'
+    - '**/.gitignore'
 
 jobs:
   build-and-deploy:
