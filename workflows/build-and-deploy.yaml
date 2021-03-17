@@ -1,15 +1,13 @@
 on:
   workflow_dispatch:
-  create:
-    tags:
   push:
     branches:
       - main
       - master
     # git tag -a v1.0.2
     # git push origin v1.0.2
-    # tags:
-    # - "v*"
+    tags:
+    - "v*"
     paths-ignore:
     - 'docs/**'
     - '**/README.md'
