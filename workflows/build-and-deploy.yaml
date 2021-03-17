@@ -9,6 +9,14 @@ on:
     - '**/README.md'
     - '**/LICENSE'
     - '**/.gitignore'
+  create:
+    tags:
+    - "v*"
+    paths-ignore:
+    - 'docs/**'
+    - '**/README.md'
+    - '**/LICENSE'
+    - '**/.gitignore'
 
 jobs:
   build-and-deploy:
@@ -58,10 +66,18 @@ jobs:
           exit 1
         fi
 
-    - name: Build, push and deploy
+    - name: set RELEASE_TAG variable.
+      if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags/v')
+      # This does the same:
+      # if: github.event_name == 'create' && github.event.ref_type == 'tag' && startsWith(github.event.ref, 'v')
+      # github.ref == 'refs/tags/v1.2.5' or 'refs/heads/feature-branch-1'
+      # github.event.ref == 'v1.2.5' or 'feature-branch-1'
       shell: bash
-      run: |
-        tilt ci
+      run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+    - name: build, push and deploy
+      shell: bash
+      run: tilt ci
 
     - name: Move cache (work-around)
       # Temp fix
