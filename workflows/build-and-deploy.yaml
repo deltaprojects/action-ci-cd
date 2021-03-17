@@ -1,17 +1,20 @@
 on:
   workflow_dispatch:
+  create:
+    tags:
   push:
     branches:
       - main
       - master
+    # git tag -a v1.0.2
+    # git push origin v1.0.2
+    # tags:
+    # - "v*"
     paths-ignore:
     - 'docs/**'
     - '**/README.md'
     - '**/LICENSE'
     - '**/.gitignore'
-  create:
-    tags:
-    - "v*"
 
 jobs:
   build-and-deploy:
