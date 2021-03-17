@@ -17,26 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up Docker Buildx
-      # Using buildx (https://docs.docker.com/buildx/working-with-buildx/).
-      # You can use a custom_build in your Tiltfile to utilize buildx.
-      # Something like this:
-      # custom_build(
-      #   'ghcr.io/ORGNAME/REPO',
-      #   'docker buildx build -t $EXPECTED_REF -t ORGNAME/REPO:latest -f Dockerfile --cache-from type=local,src=/tmp/.buildx-cache --cache-to type=local,dest=/tmp/.buildx-cache-new --push ./',
-      #   ['.'],
-      #   skips_local_docker=True,
-      #   disable_push=True,
-      # )
-      id: buildx
-      uses: docker/setup-buildx-action@v1
-      with:
-        install: true
-        driver: docker-container
-        driver-opts: |
-          image=moby/buildkit:rootless
-          network=host
-
     - name: Cache Docker layers
       uses: actions/cache@v2
       with:
@@ -55,14 +35,6 @@ jobs:
 
     - name: Install kube tools
       uses: yokawasa/action-setup-kube-tools@v0.4.0
-
-    # commenting out, context actions are severely limited.
-    # - name: auth with k8s, build, push & deploy with tilt
-    #   uses: deltaprojects/action-tilt-auth-bpd@master
-    #   with:
-    #     rancher-context: ${{ secrets.RANCHER_CONTEXT }}
-    #     rancher-token: ${{ secrets.RANCHER_TOKEN }}
-    #     rancher-url: ${{ secrets.RANCHER_URL }}
 
     # - name: configure kubectl from secret
     #   shell: bash
@@ -89,7 +61,6 @@ jobs:
     - name: Build, push and deploy
       shell: bash
       run: |
-        docker buildx use --default --global ${{ steps.buildx.outputs.name }}
         tilt ci
 
     - name: Move cache (work-around)
