@@ -4,7 +4,7 @@ on:
     branches:
       - main
       - master
-    # git tag -a v1.0.2
+    # git tag v1.0.2
     # git push origin --tags
     tags:
     - "v*"
@@ -73,7 +73,9 @@ jobs:
 
     - name: build, push and deploy
       shell: bash
-      run: tilt ci
+      run: |
+        tilt ci
+        docker buildx rm tilt_ci || echo no buildx builder named tilt_ci
 
     - name: Move cache (work-around)
       # Temp fix
