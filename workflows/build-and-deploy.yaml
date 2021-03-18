@@ -5,7 +5,7 @@ on:
       - main
       - master
     # git tag -a v1.0.2
-    # git push origin v1.0.2
+    # git push origin --tags
     tags:
     - "v*"
     paths-ignore:
@@ -63,9 +63,9 @@ jobs:
         fi
 
     - name: set RELEASE_TAG variable.
-      if: github.event_name == 'create' && startsWith(github.ref, 'refs/tags/v')
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
       # This does the same:
-      # if: github.event_name == 'create' && github.event.ref_type == 'tag' && startsWith(github.event.ref, 'v')
+      # if: github.event_name == 'push' && github.event.ref_type == 'tag' && startsWith(github.event.ref, 'v')
       # github.ref == 'refs/tags/v1.2.5' or 'refs/heads/feature-branch-1'
       # github.event.ref == 'v1.2.5' or 'feature-branch-1'
       shell: bash
