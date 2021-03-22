@@ -83,5 +83,5 @@ jobs:
       # https://github.com/moby/buildkit/issues/1896
       shell: bash
       run: |
-        rm -rf /tmp/.buildx-cache
-        mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+        test -d /tmp/.buildx-cache-new && rm -rf /tmp/.buildx-cache
+        test -d /tmp/.buildx-cache-new && mv /tmp/.buildx-cache-new /tmp/.buildx-cache
