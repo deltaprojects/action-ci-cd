@@ -3,6 +3,7 @@ syncs:
       - deltaprojects/hello-kubernetes
       - deltaprojects/intranet
       - deltaprojects/delta-dashkiosk-k8s
+      - deltaprojects/bisnode-upload-k8s
     files:
       - src: workflows/build-and-deploy.yaml
         dest: .github/workflows/build-and-deploy.yaml
