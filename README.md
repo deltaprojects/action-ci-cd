@@ -1,11 +1,11 @@
 # Github Actions + Tilt CI/CD
 
-This repo contains our CI/CD Github Actions workflows for running Tilt in a Github Actions CI/CD pipeline defined in folder [workflows/](tree/master/workflows/).
+This repo contains our CI/CD Github Actions workflows for running Tilt in a Github Actions CI/CD pipeline defined in folder [workflows/](workflows/).
 It also syncs the workflows via pull requests to all repositories defined in [.github/syncs.yml][2] using action [jetersen/ghaction.file.sync][1].
 
 ## Usage
 
-Modify [workflows/build-and-deploy.yaml](blob/master/workflows/build-and-deploy.yaml) to update the workflow.
+Modify [workflows/build-and-deploy.yaml](workflows/build-and-deploy.yaml) to update the workflow.
 
 To add a repository that will receive the Github Actions just add your repo to the list in [.github/syncs.yml][2] and a pull request will pop-up in the repository you just added.
 
@@ -36,4 +36,4 @@ Then run `kubectl config view --minify -o yaml --raw | base64` to export.
 Put this into a secret named KUBE_CONFIG in GitHub.  
 
 [1]: https://github.com/jetersen/ghaction.file.sync/
-[2]: blob/master/.github/syncs.yml
+[2]: .github/syncs.yml
