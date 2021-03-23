@@ -1,34 +1,39 @@
-# k8s auth + Tilt build, push and deploy GitHub composite action
+# Github Actions + Tilt CI/CD
 
-GitHub composite action for k8s auth thereafter Tilt build, push and deploy.
+This repo contains our CI/CD Github Actions workflows for running Tilt in a Github Actions CI/CD pipeline defined in folder [workflows/](tree/master/workflows/).
+It also syncs the workflows via pull requests to all repositories defined in [.github/syncs.yml][2] using action [jetersen/ghaction.file.sync][1].
 
-This is still alpha and not ready for public use.
-An example of this is that we work-around the problem that our Rancher is using external LB's with TLS termination. And Rancher itself uses self-signed certificates.
+## Usage
 
-requires tilt, kubectl and docker. However you should probably have helm and rancher cli installed if you use them.
+Modify [workflows/build-and-deploy.yaml](blob/master/workflows/build-and-deploy.yaml) to update the workflow.
 
-Usage
+To add a repository that will receive the Github Actions just add your repo to the list in [.github/syncs.yml][2] and a pull request will pop-up in the repository you just added.
 
-```yaml
-    - uses: deltaprojects/action-tilt-auth-bpd@master
-      with:
-        # either rancher-*
-        rancher-context: ${{ secrets.RANCHER_CONTEXT }} # Rancher context i.e. cluster-id:project-id
-        rancher-token: ${{ secrets.RANCHER_TOKEN }} # Rancher API bearer token
-        rancher-url: ${{ secrets.RANCHER_URL }} # Rancher API endpoint
-        # or kube-config
-        kube-config: ${{ secrets.KUBE_CONFIG }} # A base64 encoded kubectl config
-        # if both are set, rancher-* is used.
+## Initial setup
+
+This repository needs two secrets, `FILE_SYNC_APP_ID` and `FILE_SYNC_APP_PEM` as described in [jetersen/ghaction.file.sync][1].
+And currently our Tilt workflow uses following organization secrets:
+
+```txt
+DOCKER_HUB_ACCESS_TOKEN
+DOCKER_HUB_USERNAME
+RANCHER_CONTEXT
+RANCHER_TOKEN
+RANCHER_URL
 ```
 
-Use either "kube-config" or "rancher-" inputs.
+Currently we use rancher to authenticate. But in the future we could be using another Kubernetes distribution. So in that case we would need a `KUBE_CONFIG` secret
 
-**kube-config**  
-To create secret set your correct context in your local setup.  
-Then run `kubectl config view --minify -o yaml --raw | base64` to export.  
-Put this into a secret named KUBE_CONFIG in GitHub.  
+Anyways here are the instructions to create the needed secrets
 
-**rancher-**  
+**Rancher secrets**  
 To create a API key, login to Rancher Web UI and click your profile -> API & Keys.  
 Create a new key with no scope. Put Bearer Token in GitHub secret RANCHER_TOKEN and Endpoint URL as RANCHER_URL.  
 To select context run `rancher context switch` and copy the PROJECT ID into GitHub secret RANCHER_TOKEN.  
+
+**kube-config secret**  
+Then run `kubectl config view --minify -o yaml --raw | base64` to export.  
+Put this into a secret named KUBE_CONFIG in GitHub.  
+
+[1]: https://github.com/jetersen/ghaction.file.sync/
+[2]: blob/master/.github/syncs.yml
