@@ -48,6 +48,7 @@ jobs:
         matches: amd64.deb
         owner: vmware-tanzu
         repo: buildkit-cli-for-kubectl
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install buildkit-cli-for-kubectl
       shell: bash
