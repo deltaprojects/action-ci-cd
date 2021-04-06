@@ -42,6 +42,17 @@ jobs:
       with:
         tilt: '0.19.2'
 
+    - name: Download buildkit-cli-for-kubectl
+      uses: XAMPPRocky/get-github-release@v1.0.4
+      with:
+        matches: amd64.deb
+        owner: vmware-tanzu
+        repo: buildkit-cli-for-kubectl
+
+    - name: Install buildkit-cli-for-kubectl
+      shell: bash
+      run: sudo dpkg -i -R /tmp/buildkit-cli-for-kubectl
+
     # - name: configure kubectl from secret
     #   shell: bash
     #   run: |
