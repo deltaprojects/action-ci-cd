@@ -43,16 +43,16 @@ jobs:
         tilt: '0.19.2'
 
     - name: Download buildkit-cli-for-kubectl
-      uses: XAMPPRocky/get-github-release@v1.0.4
+      uses: engineerd/configurator@v0.0.6
       with:
-        matches: amd64.deb
-        owner: vmware-tanzu
-        repo: buildkit-cli-for-kubectl
+        name: kubectl-build
+        pathInArchive: kubectl-build
+        fromGitHubReleases: true
+        repo: vmware-tanzu/buildkit-cli-for-kubectl
+        includePrereleases: true
         token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Install buildkit-cli-for-kubectl
-      shell: bash
-      run: sudo dpkg -i -R /tmp/buildkit-cli-for-kubectl
+        urlTemplate: https://github.com/vmware-tanzu/buildkit-cli-for-kubectl/releases/download/{{version}}/linux-{{version}}.tgz?.tar.gz
+        version: latest
 
     # - name: configure kubectl from secret
     #   shell: bash
