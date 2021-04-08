@@ -30,9 +30,13 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Install kube tools
-      uses: yokawasa/action-setup-kube-tools@v0.4.0
+      uses: yokawasa/action-setup-kube-tools@v0.6.0
       with:
         tilt: '0.19.2'
+        setup-tools: |
+          tilt
+          rancher
+          yq
 
     - name: Download buildkit-cli-for-kubectl
       uses: engineerd/configurator@v0.0.6
