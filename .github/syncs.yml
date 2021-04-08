@@ -7,6 +7,7 @@ syncs:
       - deltaprojects/kafka-manager-k8s
       - deltaprojects/github-actions-dashboard
       - deltaprojects/lightair-k8s
+      - deltaprojects/buildkit-k8s
     files:
       - src: workflows/build-and-deploy.yaml
         dest: .github/workflows/build-and-deploy.yaml
