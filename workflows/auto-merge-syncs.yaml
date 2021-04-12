@@ -35,8 +35,17 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            await github.git.deleteRef({
+            const refExists = await github.git.getRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "heads/${{ github.head_ref }}",
             })
+            console.log(`Check for ref:${{ github.head_ref }} - ${refExists}`)
+
+            if (refExists !== '404') {
+              await github.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: "heads/${{ github.head_ref }}",
+              })
+            }
