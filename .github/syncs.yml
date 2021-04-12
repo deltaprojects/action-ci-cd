@@ -11,3 +11,5 @@ syncs:
     files:
       - src: workflows/build-and-deploy.yaml
         dest: .github/workflows/build-and-deploy.yaml
+      - src: workflows/auto-merge-syncs.yaml
+        dest: .github/workflows/auto-merge-syncs.yaml
