@@ -61,12 +61,9 @@ jobs:
       shell: bash
       run: |
         if ! [[ -z "${{ secrets.RANCHER_CONTEXT }}" || -z "${{ secrets.RANCHER_CONTEXT }}" || -z "${{ secrets.RANCHER_URL }}" ]]; then
-          rancher login --skip-verify --context ${{ secrets.RANCHER_CONTEXT }} --token ${{ secrets.RANCHER_TOKEN }} ${{ secrets.RANCHER_URL }}
+          rancher login --context ${{ secrets.RANCHER_CONTEXT }} --token ${{ secrets.RANCHER_TOKEN }} ${{ secrets.RANCHER_URL }}
           mkdir -p ${HOME}/.kube
           rancher kubectl config view --minify --raw > ${HOME}/.kube/config
-          KUBE_CLUSTER_URL=$(kubectl config view --minify -o 'jsonpath={.clusters[0].cluster.server}')
-          KUBE_CONTEXT=$(kubectl config view --minify -o 'jsonpath={.current-context}')
-          kubectl config set-cluster ${KUBE_CONTEXT} --insecure-skip-tls-verify=true --server=${KUBE_CLUSTER_URL}
         else
           echo needs secrets RANCHER_CONTEXT, RANCHER_CONTEXT and RANCHER_URL
           exit 1
@@ -83,5 +80,4 @@ jobs:
 
     - name: build, push and deploy
       shell: bash
-      run: |
-        tilt ci
+      run: tilt ci
