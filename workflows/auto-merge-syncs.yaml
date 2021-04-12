@@ -29,3 +29,14 @@ jobs:
               pull_number: context.payload.pull_request.number,
               repo: context.repo.repo,
             })
+
+      - name: Delete merged pull request branch
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.git.deleteRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: ${{ github.head_ref }}
+            })
