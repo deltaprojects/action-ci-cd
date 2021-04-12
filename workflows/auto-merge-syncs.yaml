@@ -39,10 +39,12 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "heads/${{ github.head_ref }}",
+            }).then(() => true, error => {
+              if (error.status === 404) return false
+              throw error
             })
-            console.log(`Check for ref:${{ github.head_ref }} - ${refExists}`)
 
-            if (refExists !== '404') {
+            if (refExists) {
               await github.git.deleteRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
