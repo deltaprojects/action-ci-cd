@@ -18,17 +18,14 @@ jobs:
       )
 
     steps:
-      - name: "Merge pull request"
-        uses: "actions/github-script@v3"
+      - name: Merge pull request for ${{ github.event.client_payload.ReleaseBranchName }}
+        uses: actions/github-script@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const pullRequest = context.payload.pull_request
-            const repository = context.repo
-
             await github.pulls.merge({
               merge_method: "rebase",
-              owner: repository.owner,
-              pull_number: pullRequest.number,
-              repo: repository.repo,
+              owner: context.repo.owner,
+              pull_number: context.payload.pull_request.number,
+              repo: context.repo.repo,
             })
