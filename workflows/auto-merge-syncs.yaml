@@ -38,5 +38,5 @@ jobs:
             await github.git.deleteRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: ${{ github.head_ref }}
+              ref: "${{ github.head_ref }}",
             })
