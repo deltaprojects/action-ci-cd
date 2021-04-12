@@ -1,0 +1,34 @@
+
+on: pull_request
+
+jobs:
+  merge:
+    name: "Auto merge workflow syncs"
+
+    runs-on: "ubuntu-latest"
+
+    if: >
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.draft == false && (
+        github.event.action == 'opened' ||
+        github.event.action == 'reopened' ||
+        github.event.action == 'synchronize'
+      ) && (
+        github.actor == 'gh-file-sync[bot]'
+      )
+
+    steps:
+      - name: "Merge pull request"
+        uses: "actions/github-script@v3"
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pullRequest = context.payload.pull_request
+            const repository = context.repo
+
+            await github.pulls.merge({
+              merge_method: "rebase",
+              owner: repository.owner,
+              pull_number: pullRequest.number,
+              repo: repository.repo,
+            })
