@@ -2,4 +2,9 @@
   "extends": [
     "config:base"
   ]
+},
+{
+  "github-actions": {
+    "fileMatch": ["^\.github\/workflows\/[^/]+\.ya?ml$", "^workflows\/[^/]+\.ya?ml$"]
+  }
 }
