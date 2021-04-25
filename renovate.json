@@ -3,6 +3,6 @@
     "config:base"
   ],
   "github-actions": {
-    "fileMatch": ["^workflows\/[^/]+\.ya?ml$"]
+    "fileMatch": ["^workflows\/[^/]+.ya?ml$"]
   }
 }
