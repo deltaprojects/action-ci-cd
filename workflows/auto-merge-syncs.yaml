@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Merge pull request for ${{ github.event.client_payload.ReleaseBranchName }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -30,7 +30,7 @@ jobs:
             })
 
       - name: Delete merged pull request branch
-        uses: actions/github-script@v3
+        uses: actions/github-script@v4
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
