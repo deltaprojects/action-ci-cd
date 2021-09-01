@@ -32,9 +32,10 @@ jobs:
     - name: Install kube tools
       env: 
         # renovate: datasource=github-releases depName=tilt-dev/tilt
-        TILT_VERSION: '0.19.7'
+        TILT_VERSION: 'v0.19.7'
         # renovate: datasource=github-releases depName=rancher/cli
-        RANCHER_VERSION: '2.4.10'
+        RANCHER_VERSION: 'v2.4.10'
+      # renovate: datasource=github-releases depName=yokawasa/action-setup-kube-tools
       uses: yokawasa/action-setup-kube-tools@v0.7.1
       with:
         tilt: ${{ env.TILT_VERSION }}
@@ -45,7 +46,8 @@ jobs:
           yq
 
     - name: Download BuildKit CLI for kubectl
-      uses: engineerd/configurator@v0.0.6
+      # renovate: datasource=github-releases depName=engineerd/configurator
+      uses: engineerd/configurator@v0.0.8
       with:
         name: kubectl-build
         pathInArchive: kubectl-build
@@ -53,7 +55,7 @@ jobs:
         repo: vmware-tanzu/buildkit-cli-for-kubectl
         includePrereleases: true
         token: ${{ secrets.GITHUB_TOKEN }}
-        urlTemplate: https://github.com/vmware-tanzu/buildkit-cli-for-kubectl/releases/download/{{version}}/linux-{{version}}.tgz?.tar.gz
+        urlTemplate: https://github.com/vmware-tanzu/buildkit-cli-for-kubectl/releases/download/{{version}}/linux-{{version}}.tgz
         version: latest
 
     # - name: configure kubectl from secret
