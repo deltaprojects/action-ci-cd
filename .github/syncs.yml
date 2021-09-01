@@ -8,6 +8,7 @@ syncs:
       - deltaprojects/lightair-k8s
       - deltaprojects/buildkit-k8s
       - deltaprojects/httpbin-k8s
+      - deltaprojects/tukey-proxy
     files:
       - src: workflows/build-and-deploy.yaml
         dest: .github/workflows/build-and-deploy.yaml
