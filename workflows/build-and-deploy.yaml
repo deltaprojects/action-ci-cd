@@ -35,7 +35,6 @@ jobs:
         TILT_VERSION: 'v0.19.7'
         # renovate: datasource=github-releases depName=rancher/cli
         RANCHER_VERSION: 'v2.4.10'
-      # renovate: datasource=github-releases depName=yokawasa/action-setup-kube-tools
       uses: yokawasa/action-setup-kube-tools@v0.8.0
       with:
         tilt: ${{ env.TILT_VERSION }}
@@ -46,7 +45,6 @@ jobs:
           yq
 
     - name: Download BuildKit CLI for kubectl
-      # renovate: datasource=github-releases depName=engineerd/configurator
       uses: engineerd/configurator@v0.0.8
       with:
         name: kubectl-build
