@@ -4,13 +4,13 @@
   ],
   "github-actions": {
     "fileMatch": [
-      "^workflows\/[^/]+.ya?ml$"
+      "^(workflows|\\.github/workflows)/[^/]+\\.ya?ml$"
     ]
   },
   "regexManagers": [
     {
       "fileMatch": [
-        "^workflows\/[^/]+.ya?ml$"
+        "^workflows/[^/]+\\.ya?ml$"
       ],
       "matchStrings": [
         "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sENV .*?_VERSION=(?<currentValue>.*)\\s"
