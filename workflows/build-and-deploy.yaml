@@ -34,7 +34,7 @@ jobs:
         # renovate: datasource=github-releases depName=tilt-dev/tilt
         TILT_VERSION: 'v0.19.7'
         # renovate: datasource=github-releases depName=rancher/cli
-        RANCHER_VERSION: 'v2.4.10'
+        RANCHER_VERSION: 'v2.4.12'
       uses: yokawasa/action-setup-kube-tools@v0.8.0
       with:
         tilt: ${{ env.TILT_VERSION }}
