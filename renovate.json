@@ -4,11 +4,9 @@
   ],
   "regexManagers": [
     {
-      "fileMatch": [
-        "^workflows/[^/]+\\.ya?ml$"
-      ],
+      "fileMatch": [ "^workflows/[^/]+\\.ya?ml$" ],
       "matchStrings": [
-        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s\\w+?_VERSION:\\s'?(?<currentValue>[^'\\n\\r]+)'*?"
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s\\w+?_VERSION:\\s'?(?<currentValue>[^'\\s]+)'*?\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
