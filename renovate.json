@@ -2,11 +2,6 @@
   "extends": [
     "config:base"
   ],
-  "github-actions": {
-    "fileMatch": [
-      "^(workflows|\\.github/workflows)/[^/]+\\.ya?ml$"
-    ]
-  },
   "regexManagers": [
     {
       "fileMatch": [
@@ -17,5 +12,8 @@
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
-  ]
+  ],
+  "github-actions": {
+    "fileMatch": [ "^(workflows|\\.github/workflows)/[^/]+\\.ya?ml$" ]
+  }
 }
