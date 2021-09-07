@@ -1,17 +1,14 @@
 {
-  "extends": [
-    "config:base"
-  ],
+  "extends": ["config:base"],
+  "enabledManagers": ["github-actions","regex"],
   "regexManagers": [
     {
-      "fileMatch": [ "^workflows/[^/]+\\.ya?ml$" ],
+      "fileMatch": ["^workflows/[^/]+\\.ya?ml$"],
       "matchStrings": [
         "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\s\\w+?_VERSION:\\s'?(?<currentValue>[^'\\s]+)'*?\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ],
-  "github-actions": {
-    "fileMatch": [ "^(workflows|\\.github/workflows)/[^/]+\\.ya?ml$" ]
-  }
+  "github-actions": {"fileMatch": ["^workflows/[^/]+\\.ya?ml$"]}
 }
