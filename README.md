@@ -5,9 +5,17 @@ It also syncs the workflows via pull requests to all repositories defined in [.g
 
 ## Usage
 
+### To modify how the the workflow works
+
 Modify [workflows/build-and-deploy.yaml](workflows/build-and-deploy.yaml) to update the workflow.
 
-To add a repository that will receive the Github Actions just add your repo to the list in [.github/syncs.yml][2] and a pull request will pop-up in the repository you just added (and should auto-merge).
+Push your changes to dev branch. Once you are done with all your changes. Merge into master.
+
+### Add repositories into the pipeline
+
+To add a repository that will receive the Github Actions just add your repo to the list in [.github/syncs.yml][2] and when you are done, merge dev branch into master.
+
+A pull request will pop-up in the repository you just added (and should auto-merge).
 
 ## Initial setup
 
