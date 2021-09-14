@@ -1,24 +1,28 @@
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-      - master
-    # git tag v1.0.2
-    # git push origin --tags
-    tags:
-    - "v*"
-    paths-ignore:
-    - 'docs/**'
-    - '**/README.md'
-    - '**/LICENSE'
-    - '**/.gitignore'
+name: 'Setup and Execute Tilt'
+description: 'Install Tilt and dependencies, authenticate against k8s and docker hub, execute Tilt'
+inputs:
+  DOCKER_HUB_USERNAME:
+    required: true
+    description: Docker Hub username
+  DOCKER_HUB_ACCESS_TOKEN:
+    required: true
+    description: Docker Hub API access token
+  GITHUB_TOKEN:
+    required: true
+    description: GitHub API token
+  RANCHER_CONTEXT:
+    required: true
+    description: Rancher Context
+  RANCHER_URL:
+    required: true
+    description: Rancher URL
+  RANCHER_TOKEN:
+    required: true
+    description: Rancher API Token
 
-jobs:
-  build-and-deploy:
-    name: build and deploy
-    runs-on: ubuntu-latest
-    steps:
+runs:
+  using: "composite"
+  steps:
     - uses: actions/checkout@v2
 
     - name: Login to Docker Hub
@@ -26,8 +30,8 @@ jobs:
       # Create two GitHub secrets DOCKER_HUB_USERNAME and DOCKER_HUB_ACCESS_TOKEN.
       uses: docker/login-action@v1
       with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
-        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        username: ${{ inputs.DOCKER_HUB_USERNAME }}
+        password: ${{ inputs.DOCKER_HUB_ACCESS_TOKEN }}
 
     - name: Install kube tools
       env: 
@@ -52,7 +56,7 @@ jobs:
         fromGitHubReleases: true
         repo: vmware-tanzu/buildkit-cli-for-kubectl
         includePrereleases: true
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ inputs.GITHUB_TOKEN }}
         urlTemplate: https://github.com/vmware-tanzu/buildkit-cli-for-kubectl/releases/download/{{version}}/linux-{{version}}.tgz
         version: latest
 
@@ -66,8 +70,8 @@ jobs:
     - name: configure kubectl from Rancher API key
       shell: bash
       run: |
-        if ! [[ -z "${{ secrets.RANCHER_CONTEXT }}" || -z "${{ secrets.RANCHER_CONTEXT }}" || -z "${{ secrets.RANCHER_URL }}" ]]; then
-          rancher login --context ${{ secrets.RANCHER_CONTEXT }} --token ${{ secrets.RANCHER_TOKEN }} ${{ secrets.RANCHER_URL }}
+        if ! [[ -z "${{ inputs.RANCHER_CONTEXT }}" || -z "${{ inputs.RANCHER_TOKEN }}" || -z "${{ inputs.RANCHER_URL }}" ]]; then
+          rancher login --context ${{ inputs.RANCHER_CONTEXT }} --token ${{ inputs.RANCHER_TOKEN }} ${{ inputs.RANCHER_URL }}
           mkdir -p ${HOME}/.kube
           rancher kubectl config view --minify --raw > ${HOME}/.kube/config
         else
@@ -75,14 +79,15 @@ jobs:
           exit 1
         fi
 
-    - name: set RELEASE_TAG variable.
-      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-      # This does the same:
-      # if: github.event_name == 'push' && github.event.ref_type == 'tag' && startsWith(github.event.ref, 'v')
-      # github.ref == 'refs/tags/v1.2.5' or 'refs/heads/feature-branch-1'
-      # github.event.ref == 'v1.2.5' or 'feature-branch-1'
-      shell: bash
-      run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+    # This can be uncommented when this issue is closed https://github.com/actions/runner/issues/834
+    # - name: set RELEASE_TAG variable.
+    #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    #   # This does the same:
+    #   # if: github.event_name == 'push' && github.event.ref_type == 'tag' && startsWith(github.event.ref, 'v')
+    #   # github.ref == 'refs/tags/v1.2.5' or 'refs/heads/feature-branch-1'
+    #   # github.event.ref == 'v1.2.5' or 'feature-branch-1'
+    #   shell: bash
+    #   run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
     - name: build, push and deploy
       shell: bash
