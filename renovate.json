@@ -4,12 +4,12 @@
   "enabledManagers": ["github-actions","regex"],
   "regexManagers": [
     {
-      "fileMatch": ["^workflows/[^/]+\\.ya?ml$"],
+      "fileMatch": ["^workflows/\\w+/*\\w+\\.ya?ml$"],
       "matchStrings": [
         "datasource=(?<datasource>.+?) depName=(?<depName>.+?)( versioning=(?<versioning>.*?))?\\s+\\w+?_VERSION:\\s'?(?<currentValue>.+?)'?\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ],
-  "github-actions": {"fileMatch": ["^workflows/[^/]+\\.ya?ml$"]}
+  "github-actions": {"fileMatch": ["^workflows/\\w+/*\\w+\\.ya?ml$"]}
 }
