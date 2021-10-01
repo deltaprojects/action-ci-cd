@@ -19,16 +19,6 @@ jobs:
     name: Setup and Execute Tilt
     runs-on: ubuntu-latest
     steps:
-      # This should be moved to the composite action when this issue is closed https://github.com/actions/runner/issues/834
-      - name: set RELEASE_TAG variable.
-        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-        # This does the same:
-        # if: github.event_name == 'push' && github.event.ref_type == 'tag' && startsWith(github.event.ref, 'v')
-        # github.ref == 'refs/tags/v1.2.5' or 'refs/heads/feature-branch-1'
-        # github.event.ref == 'v1.2.5' or 'feature-branch-1'
-        shell: bash
-        run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-
       # If not public
       # - uses: actions/checkout@v2
       #   with:
