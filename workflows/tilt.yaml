@@ -16,18 +16,18 @@ on:
 
 jobs:
   tilt:
-    name: Setup and Execute Tilt
+    name: Initialize and Execute Tilt
     runs-on: ubuntu-latest
     steps:
       # If not public
       # - uses: actions/checkout@v2
       #   with:
-      #     repository: deltaprojects/action-tilt-ci-cd
-      #     path: tilt-action
+      #     repository: deltaprojects/action-ci-cd
+      #     path: auth-action
       #     token: XXX
-      # - uses: ./tilt-action/workflows/tilt
+      # - uses: ./auth-action/workflows/auth
       # if public
-      - uses: deltaprojects/action-tilt-ci-cd/workflows/tilt@master
+      - uses: deltaprojects/action-tilt-ci-cd/workflows/auth@master
         with:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
           DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
@@ -35,3 +35,7 @@ jobs:
           RANCHER_CONTEXT: ${{ secrets.RANCHER_CONTEXT }}
           RANCHER_URL: ${{ secrets.RANCHER_URL }}
           RANCHER_TOKEN: ${{ secrets.RANCHER_TOKEN }}
+
+      - name: Execute Tilt
+        shell: bash
+        run: tilt ci
