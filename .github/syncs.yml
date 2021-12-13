@@ -9,6 +9,8 @@ syncs:
       - deltaprojects/buildkit-k8s
       - deltaprojects/httpbin-k8s
       - deltaprojects/delta-validator
+      - deltaprojects/druid-accept-k8s
+      - deltaprojects/druid-k8s
     files:
       - src: workflows/tilt.yaml
         dest: .github/workflows/tilt.yaml
