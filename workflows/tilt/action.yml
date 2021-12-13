@@ -36,7 +36,7 @@ runs:
     - name: Install kube tools
       env: 
         # renovate: datasource=github-releases depName=tilt-dev/tilt
-        TILT_VERSION: 'v0.22.13'
+        TILT_VERSION: 'v0.23.3'
         # renovate: datasource=github-releases depName=rancher/cli
         RANCHER_VERSION: 'v2.4.13'
       uses: yokawasa/action-setup-kube-tools@v0.8.0
