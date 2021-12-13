@@ -56,5 +56,36 @@ Put this into a secret named KUBE_CONFIG in GitHub.
 
 This repository needs two secrets, `FILE_SYNC_APP_ID` and `FILE_SYNC_APP_PEM` as described in [GitHub File Sync][1].
 
+## Keeping dev and master branch in sync
+
+First sync master into dev.
+(This should be done every time after a pull request has been merged into master to keep dev in sync)
+
+```bash
+git checkout master
+git pull
+git checkout dev
+git pull
+git merge master
+```
+
+If there aren't any conflicts, push the dev branch to Github
+
+```bash
+git status
+git push
+```
+
+If there are conflicts, resolve them with an editor first and commit/add any files that need it.
+
+```bash
+# use editor to resolve conflicts.
+git merge master # to to merge again after resolving the conflicts
+git status
+git add . # add any files that aren't staged
+git commit -a -m "merge master into dev"
+git push
+```
+
 [1]: https://github.com/marketplace/actions/github-file-sync
 [2]: .github/syncs.yml
