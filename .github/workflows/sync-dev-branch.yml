@@ -1,10 +1,10 @@
-# syncs dev branch every time a commit is pushed to the default branch
+# syncs dev branch every time a commit is pushed to the master branch
 name: Sync dev branch
 
 on:
   pull_request:
     types: [ closed ]
-    branches: [ $default-branch ]
+    branches: [ master ]
 
 jobs:
   sync-branch:
