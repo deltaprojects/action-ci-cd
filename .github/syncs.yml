@@ -11,6 +11,8 @@ syncs:
       - deltaprojects/delta-validator
       - deltaprojects/druid-accept-k8s
       - deltaprojects/druid-k8s
+      - deltaprojects/kafka-dev-k8s
+      - deltaprojects/kafka-accept-k8s
     files:
       - src: workflows/tilt.yaml
         dest: .github/workflows/tilt.yaml
