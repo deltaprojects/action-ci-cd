@@ -2,17 +2,20 @@ name: Workflow Sync
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - $default-branch
-  # pull_request:
+  # push:
   #   branches:
   #     - $default-branch
+  pull_request:
+    types: [ closed ]
+    branches: [ $default-branch ]
 
 jobs:
   file-syncs:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
+      - run: |
+          echo PR #${{ github.event.number }} has been merged
       - name: Running Workflow Sync
         uses: 'jetersen/ghaction.file.sync@v1'
         with:

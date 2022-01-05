@@ -2,14 +2,18 @@
 name: Sync dev branch
 
 on:
-  push:
+  pull_request:
+    types: [ closed ]
     branches: [ $default-branch ]
 
 jobs:
   sync-branch:
     name: Update dev branch
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
+      - run: |
+          echo PR #${{ github.event.number }} has been merged
       - name: Checkout repository
         uses: actions/checkout@v2
       - uses: connor-baer/action-sync-branch@v1.0.1
