@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
-  pull_request:
-    branches:
-      - master
+      - $default-branch
+  # pull_request:
+  #   branches:
+  #     - $default-branch
 
 jobs:
   file-syncs:
