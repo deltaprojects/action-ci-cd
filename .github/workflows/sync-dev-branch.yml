@@ -1,0 +1,19 @@
+# syncs dev branch every time a commit is pushed to the default branch
+name: Sync dev branch
+
+on:
+  push:
+    branches: [ $default-branch ]
+
+jobs:
+  sync-branch:
+    name: Update dev branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - uses: connor-baer/action-sync-branch@v1.0.1
+        with:
+          branch: dev
+          token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
