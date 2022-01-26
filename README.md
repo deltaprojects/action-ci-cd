@@ -32,8 +32,9 @@ In short running Tilt in a Github Actions CI/CD pipeline.
 Currently our Tilt workflow uses following organization secrets:
 
 ```txt
-DOCKER_HUB_ACCESS_TOKEN
-DOCKER_HUB_USERNAME
+CONTAINER_REGISTRY
+REGISTRY_TOKEN
+REGISTRY_USERNAME
 RANCHER_CONTEXT
 RANCHER_TOKEN
 RANCHER_URL
