@@ -13,6 +13,7 @@ syncs:
       - deltaprojects/druid-k8s
       - deltaprojects/kafka-dev-k8s
       - deltaprojects/kafka-accept-k8s
+      - deltaprojects/httpbin-aws-icedog-test01
     files:
       - src: workflows/tilt.yaml
         dest: .github/workflows/tilt.yaml
