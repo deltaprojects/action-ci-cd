@@ -94,7 +94,7 @@ runs:
     #   run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
     - name: set RELEASE_TAG variable.
-      uses: actions/github-script@v5
+      uses: actions/github-script@v6
       with:
         github-token: none
         # if (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) {
