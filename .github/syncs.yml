@@ -15,6 +15,7 @@ syncs:
       - deltaprojects/kafka-accept-k8s
       - deltaprojects/httpbin-aws-icedog-test01
       - deltaprojects/opentsdb-k8s
+      - deltaprojects/tukey-k8s
     files:
       - src: workflows/tilt.yaml
         dest: .github/workflows/tilt.yaml
