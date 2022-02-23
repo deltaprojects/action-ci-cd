@@ -40,7 +40,7 @@ runs:
     - name: Install kube tools
       env: 
         # renovate: datasource=github-releases depName=tilt-dev/tilt
-        TILT_VERSION: 'v0.25.1'
+        TILT_VERSION: 'v0.25.0'
         # renovate: datasource=github-releases depName=rancher/cli
         RANCHER_VERSION: 'v2.6.0'
       uses: yokawasa/action-setup-kube-tools@v0.8.0
@@ -83,25 +83,25 @@ runs:
           exit 1
         fi
 
-    # This can be uncommented when this issue is closed https://github.com/actions/runner/issues/834
-    # - name: set RELEASE_TAG variable.
-    #   if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    - name: set RELEASE_TAG variable.
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     #   # This does the same:
     #   # if: github.event_name == 'push' && github.event.ref_type == 'tag' && startsWith(github.event.ref, 'v')
     #   # github.ref == 'refs/tags/v1.2.5' or 'refs/heads/feature-branch-1'
     #   # github.event.ref == 'v1.2.5' or 'feature-branch-1'
-    #   shell: bash
-    #   run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      shell: bash
+      run: echo "RELEASE_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
-    - name: set RELEASE_TAG variable.
-      uses: actions/github-script@v6
-      with:
-        github-token: none
-        # if (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) {
-        script: |
-          if (process.env.GITHUB_EVENT_NAME == 'push' && process.env.GITHUB_REF.startsWith('refs/tags/v')) {
-            const path = require("path"),
-            fs = require("fs");
-            const releaseTag = `${process.env.GITHUB_REF}`.split(path.sep).reverse()[0];
-            fs.appendFileSync(process.env.GITHUB_ENV, `RELEASE_TAG=${releaseTag}`);
-          }
+    # This was a temporary workaround until https://github.com/actions/runner/issues/834 got solved.
+    # - name: set RELEASE_TAG variable.
+    #   uses: actions/github-script@v6
+    #   with:
+    #     github-token: none
+    #     # if (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) {
+    #     script: |
+    #       if (process.env.GITHUB_EVENT_NAME == 'push' && process.env.GITHUB_REF.startsWith('refs/tags/v')) {
+    #         const path = require("path"),
+    #         fs = require("fs");
+    #         const releaseTag = `${process.env.GITHUB_REF}`.split(path.sep).reverse()[0];
+    #         fs.appendFileSync(process.env.GITHUB_ENV, `RELEASE_TAG=${releaseTag}`);
+    #       }
