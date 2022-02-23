@@ -18,6 +18,7 @@ jobs:
   tilt:
     name: Initialize and Execute Tilt
     runs-on: ubuntu-latest
+    concurrency: ci-${{ github.ref }}
     steps:
       # If not public
       # - uses: actions/checkout@v2
