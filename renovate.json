@@ -1,15 +1,45 @@
 {
-  "extends": ["config:base"],
-  "baseBranches": ["dev"],
-  "enabledManagers": ["github-actions","regex"],
+  "extends": [
+    "config:base"
+  ],
+  "baseBranches": [
+    "master"
+  ],
+  "enabledManagers": [
+    "github-actions",
+    "regex"
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "automerge": true
+    },
+    {
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "automerge": true
+    }
+  ],
   "regexManagers": [
     {
-      "fileMatch": ["^workflows/\\w+/*\\w+\\.ya?ml$"],
+      "fileMatch": [
+        "^workflows/\\w+/*\\w+\\.ya?ml$"
+      ],
       "matchStrings": [
         "datasource=(?<datasource>.+?) depName=(?<depName>.+?)( versioning=(?<versioning>.*?))?\\s+\\w+?_VERSION:\\s'?(?<currentValue>.+?)'?\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ],
-  "github-actions": {"fileMatch": ["^workflows/\\w+/*\\w+\\.ya?ml$"]}
+  "github-actions": {
+    "fileMatch": [
+      "^workflows/\\w+/*\\w+\\.ya?ml$"
+    ]
+  }
 }
