@@ -39,7 +39,7 @@
   ],
   "github-actions": {
     "fileMatch": [
-      "^workflows/\\w+/*\\w+\\.ya?ml$"
+      "(\\.github/workflows|^workflows)/\\w+/*\\w+\\.ya?ml$"
     ]
   }
 }
