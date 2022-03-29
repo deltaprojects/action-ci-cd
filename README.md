@@ -59,7 +59,7 @@ This repository needs two secrets, `FILE_SYNC_APP_ID` and `FILE_SYNC_APP_PEM` as
 
 ## Keeping dev and master branch in sync
 
-We have a [GitHub action](.github/sync-dev-branch.yml) that should automatically sync dev branch from the default branch every time there is a push.
+We have a [GitHub action](.github/sync-dev-branch.yml) that should automatically sync dev branch from the default branch every time there is a push/merge to default branch.
 
 You might need to reset your local dev branch when working on an old copy to avoid merge commits.
 
@@ -68,6 +68,8 @@ git checkout dev
 git fetch origin
 git reset --hard origin/dev
 ```
+
+or execute `./reset-dev.sh`
 
 [1]: https://github.com/marketplace/actions/github-file-sync
 [2]: .github/syncs.yml
