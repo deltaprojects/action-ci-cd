@@ -1,0 +1,29 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'ci-cd-config.yaml'
+
+jobs:
+  deploy:
+    name: Deploy to k8s
+    runs-on: ubuntu-latest
+    steps:
+      - uses: deltaprojects/action-tilt-ci-cd/workflows/auth@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RANCHER_CONTEXT: ${{ secrets.RANCHER_CONTEXT }}
+          RANCHER_URL: ${{ secrets.RANCHER_URL }}
+          RANCHER_TOKEN: ${{ secrets.RANCHER_TOKEN }}
+          REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+          REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+          CONTAINER_REGISTRY: ${{ secrets.CONTAINER_REGISTRY }}
+
+      - name: Prepare yaml files and excute tilt ci
+        run: |
+          export $(yq eval '.tilt.envs' ci-cd-config.yaml|sed s/': '/'='/g)
+          yq eval '.tilt.tiltfile-template' ci-cd-config.yaml > ci-cd.Tiltfile
+          [[ -s "ci-cd.Tiltfile" ]] && tilt ci -f ci-cd.Tiltfile || echo "Tiltfile is empty"
