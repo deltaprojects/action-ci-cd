@@ -23,7 +23,7 @@ syncs:
       - src: workflows/auto-merge-syncs.yaml
         dest: .github/workflows/auto-merge-syncs.yaml
 
-    - repos:
+  - repos:
       - deltaprojects/ci-cd-java
     files:
       - src: workflows/ci-cd-java/release.sh
