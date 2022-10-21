@@ -29,7 +29,7 @@ syncs:
       - src: workflows/ci-cd-java/release.sh
         dest: bin/release.sh
       - src: workflows/ci-cd-java/ci-cd-config.yaml
-        dest: ci-cd-config.yaml
+        dest: ci-cd-config.yaml.template
       - src: workflows/ci-cd-java/maven-settings.xml
         dest: .github/maven-settings.xml
       - src: workflows/ci-cd-java/docker-release.sh
