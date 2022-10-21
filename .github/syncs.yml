@@ -25,6 +25,13 @@ syncs:
 
   - repos:
       - deltaprojects/ci-cd-java
+      - deltaprojects/teichmuller
+      - deltaprojects/dooh
+      - deltaprojects/cmp-api
+      - deltaprojects/madoff-streams
+      - deltaprojects/user-sync
+      - deltaprojects/user-identification
+      - deltaprojects/delta-tukeyproxy
     files:
       - src: workflows/ci-cd-java/release.sh
         dest: bin/release.sh
