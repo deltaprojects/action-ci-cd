@@ -5,6 +5,8 @@ It also syncs the workflows via pull requests to all repositories defined in [.g
 
 ## Usage
 
+Remember that master branch is protected. So you need to either use *dev* branch or create a new branch for PR's. Don't forget to delete any new branches after you merge them. If you use *dev* it will be automatically reset every time something is merged to master.
+
 ### Add repositories into the pipeline
 
 To add a repository that will receive the Github Actions just add your repo to the list in [.github/syncs.yml][2] and when you are done, merge dev branch into master.
@@ -15,21 +17,26 @@ A pull request will pop-up in the repository you just added (and should auto-mer
 
 Create or modify a yaml file in [workflows/](workflows/). Also update README.md with details about your workflow and remember that this is a public repository.
 
-Push your changes to dev branch. Once you are done with all your changes. Merge into master.
+Push your changes to dev or a separate branch. Once you are done with all your changes. Merge into master.
 
 ## Workflows
 
 Descriptions of our current workflows.
 
-### Tilt
+### Auto merge workflow syncs
 
-[workflows/tilt.yaml](workflows/tilt.yaml) workflow executes composite action defined in [workflows/tilt/action.yml](workflows/tilt/action.yml). It install Tilt and dependencies, authenticate against k8s and docker hub and finally executes Tilt.
+[workflows/auto-merge-syncs.yaml](workflows/auto-merge-syncs.yaml) workflow automatically merges any PR's that comes from this repo.
+Since this repo is supposed to be the centralized place for our generic github actions across multiple repositories this would make it easier to manage a lot of repos.
 
-In short running Tilt in a Github Actions CI/CD pipeline.
+### Auth
 
-#### Tilt first-time setup instructions
+[workflows/auth/action.yml](workflows/auth/action.yml) workflow authenticates against our Rancher provisioned k8s clusters, Docker Hub Registry.  
+It installs some dependencies like rancher cli, kubectl and more.  
+It also sets a `$RELEASE_TAG` environment variable when there is a version tag that starts with v (ex. v1.3.3.7).
 
-Currently our Tilt workflow uses following organization secrets:
+#### Auth first-time setup instructions
+
+Currently our Auth workflow uses following organization secrets:
 
 ```txt
 CONTAINER_REGISTRY
@@ -52,6 +59,14 @@ To select context run `rancher context switch` and copy the PROJECT ID into GitH
 **kube-config secret**  
 Then run `kubectl config view --minify -o yaml --raw | base64` to export.  
 Put this into a secret named KUBE_CONFIG in GitHub.  
+
+### Tilt
+
+[workflows/tilt.yaml](workflows/tilt.yaml) workflow executes composite action defined in [workflows/tilt/action.yml](workflows/tilt/action.yml). It install Tilt and dependencies, authenticate against k8s and docker hub (using auth workflow) and finally executes Tilt.
+
+In short running Tilt in a Github Actions CI/CD pipeline.
+
+This workflow depends on the [Auth workflow](#auth). So make sure you have the secrets needed by that workflow.
 
 ## Setting up GitHub File Sync for the first time
 
