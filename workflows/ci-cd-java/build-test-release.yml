@@ -62,7 +62,7 @@ jobs:
         run: |
           export RELEASE_VERSION=${{ env.RELEASE_VERSION }}
           export RELEASE_MODULE=${{ env.RELEASE_MODULE }}
-          .github/perform-release.sh
+          bash .github/perform-release.sh
         env:
           MAVEN_USERNAME: ${{ secrets.MVN_MIRROR_USER }}
           MAVEN_PASSWORD: ${{ secrets.MVN_MIRROR_PASSWORD }}
