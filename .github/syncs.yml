@@ -33,6 +33,7 @@ syncs:
       - deltaprojects/user-sync
       - deltaprojects/user-identification
       - deltaprojects/delta-tukeyproxy
+      - deltaprojects/rainbow
     files:
       - src: workflows/ci-cd-java/release.sh
         dest: bin/release.sh
