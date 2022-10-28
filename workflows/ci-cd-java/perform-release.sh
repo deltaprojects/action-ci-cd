@@ -16,5 +16,7 @@ pushd "$PARENT_DIR" > /dev/null
 MVN_SETTINGS="$GITHUB_DIR"/maven-settings.xml
 mvn -f "$POM" clean versions:set versions:commit -DnewVersion="$RELEASE_VERSION"
 mvn -f "$POM" -s "$MVN_SETTINGS" --batch-mode --update-snapshots --activate-profiles ci -DskipTests deploy
-bash "$GITHUB_DIR"/docker-release.sh "$RELEASE_VERSION" "$RELEASE_MODULE"
+if [ -f "ci-cd-config.yaml" ]; then
+  bash "$GITHUB_DIR"/docker-release.sh "$RELEASE_VERSION" "$RELEASE_MODULE"
+fi
 popd > /dev/null
