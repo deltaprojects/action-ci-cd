@@ -19,6 +19,7 @@ syncs:
       - deltaprojects/dell-mirror-k8s
       - deltaprojects/hdp-repo-k8s
       - deltaprojects/mailsig-k8s
+      - deltaprojects/delta-on-call-k8s
     files:
       - src: workflows/tilt.yaml
         dest: .github/workflows/tilt.yaml
