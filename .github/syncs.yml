@@ -20,6 +20,7 @@ syncs:
       - deltaprojects/hdp-repo-k8s
       - deltaprojects/mailsig-k8s
       - deltaprojects/delta-on-call-k8s
+      - deltaprojects/rtfm
     files:
       - src: workflows/tilt.yaml
         dest: .github/workflows/tilt.yaml
