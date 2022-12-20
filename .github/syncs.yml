@@ -21,6 +21,7 @@ syncs:
       - deltaprojects/mailsig-k8s
       - deltaprojects/delta-on-call-k8s
       - deltaprojects/rtfm
+      # - deltaprojects/flink-loglag-k8s
     files:
       - src: workflows/tilt.yaml
         dest: .github/workflows/tilt.yaml
