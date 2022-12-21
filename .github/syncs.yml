@@ -21,6 +21,7 @@ syncs:
       - deltaprojects/mailsig-k8s
       - deltaprojects/delta-on-call-k8s
       - deltaprojects/rtfm
+      - deltaprojects/geoip-filbunke-uploader-k8s
       # - deltaprojects/flink-loglag-k8s
     files:
       - src: workflows/tilt.yaml
