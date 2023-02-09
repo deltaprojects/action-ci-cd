@@ -24,6 +24,8 @@ syncs:
       - deltaprojects/geoip-filbunke-uploader-k8s
       - deltaprojects/flink-loglag-k8s
       - deltaprojects/airflow-k8s
+      - deltaprojects/resetdp-k8s
+
     files:
       - src: workflows/tilt.yaml
         dest: .github/workflows/tilt.yaml
