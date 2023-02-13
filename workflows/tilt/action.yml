@@ -53,7 +53,7 @@ runs:
           yq
 
     - name: Download BuildKit CLI for kubectl
-      uses: engineerd/configurator@v0.0.8
+      uses: engineerd/configurator@v0.0.10
       with:
         name: kubectl-build
         pathInArchive: kubectl-build
