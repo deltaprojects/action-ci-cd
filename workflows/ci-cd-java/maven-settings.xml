@@ -25,7 +25,7 @@
       <repositories>
         <repository>
           <id>github</id>
-          <url>https://maven.pkg.github.com/deltaprojects/artifactory</url>
+          <url>https://maven.pkg.github.com/deltaprojects/delta-packages</url>
           <snapshots>
             <enabled>true</enabled>
           </snapshots>
