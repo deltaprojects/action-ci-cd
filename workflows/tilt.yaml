@@ -17,7 +17,6 @@ on:
 # Concurrency group to prevent concurrent runs
 concurrency:
   group: '${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
-  cancel-in-progress: true
 
 jobs:
   tilt:
