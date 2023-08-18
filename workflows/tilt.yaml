@@ -1,4 +1,5 @@
 on:
+  name: Tilt
   workflow_dispatch:
   push:
     branches:
