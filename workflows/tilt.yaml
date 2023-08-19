@@ -1,5 +1,5 @@
+name: Tilt
 on:
-  name: Tilt
   workflow_dispatch:
   workflow_call:
   push:
