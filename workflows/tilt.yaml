@@ -20,6 +20,9 @@ on:
 concurrency:
   group: '${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
 
+permissions:
+  packages: write
+
 jobs:
   tilt:
     name: Initialize and Execute Tilt
