@@ -37,6 +37,13 @@ runs:
         password: ${{ inputs.REGISTRY_TOKEN }}
         registry: ${{ inputs.CONTAINER_REGISTRY }}
 
+    - name: Login to ghcr.io
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ github.token }}
+
     - name: Install kube tools
       env: 
         # renovate: datasource=github-releases depName=tilt-dev/tilt
