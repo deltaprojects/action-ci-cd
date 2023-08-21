@@ -21,6 +21,7 @@ concurrency:
   group: '${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
 
 permissions:
+  contents: read
   packages: write
 
 jobs:
