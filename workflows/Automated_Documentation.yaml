@@ -1,0 +1,57 @@
+name: Automated Documentation
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths-ignore:
+      - '.github/**'
+      - '.tflint.hcl'
+  workflow_dispatch:
+  
+jobs:
+  build-matrix:
+    name: Determine modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - id: set-matrix
+        run: echo "::set-output name=modules::$(find . -maxdepth 2 -mindepth 2 -type f -name 'main.tf' | sed -r 's|/[^/]+$||' |sort |uniq |jq -c --slurp --raw-input 'split("\n") | [.[] | select(. != "")]')"
+    outputs:
+      modules: ${{ steps.set-matrix.outputs.modules }}
+
+  generate-documentation:
+    needs: build-matrix
+    name: Create documentation
+    runs-on: macos-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        module: ${{ fromJson(needs.build-matrix.outputs.modules) }}
+    
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Install prerequisites
+        run: |
+          brew update
+          brew install terraform-docs
+          
+      - name: Create documentation
+        run: terraform-docs markdown table ${{ matrix.module }} > ${{ matrix.module }}/readme.md
+
+      - name: Commit documentation
+        run: |
+          git config --local user.name "[BOT] Github Actions"
+          git config --local user.email "Actions@Github.com"
+          
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "[Automatic] Documentation Created"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

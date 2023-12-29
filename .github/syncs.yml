@@ -1,60 +1,26 @@
 syncs:
   - repos:
-      - deltaprojects/hello-kubernetes
-      - deltaprojects/intranet
-      - deltaprojects/delta-dashkiosk-k8s
-      - deltaprojects/kafka-manager-k8s
-      - deltaprojects/github-actions-dashboard
-      - deltaprojects/website-redirects-k8s
-      - deltaprojects/buildkit-k8s
-      - deltaprojects/httpbin-k8s
-      - deltaprojects/delta-validator
-      - deltaprojects/druid-accept-k8s
-      - deltaprojects/druid-k8s
-      - deltaprojects/kafka-dev-k8s
-      - deltaprojects/kafka-accept-k8s
-      - deltaprojects/httpbin-aws-icedog-test01
-      - deltaprojects/opentsdb-k8s
-      - deltaprojects/tukey-k8s
-      - deltaprojects/dell-mirror-k8s
-      - deltaprojects/hdp-repo-k8s
-      - deltaprojects/mailsig-k8s
-      - deltaprojects/delta-on-call-k8s
-      - deltaprojects/rtfm
-      - deltaprojects/geoip-filbunke-uploader-k8s
-      - deltaprojects/flink-loglag-k8s
-      - deltaprojects/airflow-k8s
-      - deltaprojects/ldap-reset-k8s
-      - deltaprojects/delta-user-reports
-      - deltaprojects/dmpoint-auth-proxy-k8s
+      - Sogeti-Service-Center/terraform-aws-feature-cps-itsmintegration
+      # - Sogeti-Service-Center/terraform-aws-feature-cps-itsmintegration
+      # - Sogeti-Service-Center/terraform-aws-feature-cps-networkandconnectivity
+      # - Sogeti-Service-Center/terraform-aws-feature-psw-backupservice
+      # - Sogeti-Service-Center/terraform-aws-spoke-kubernetes
+      # - Sogeti-Service-Center/terraform-aws-feature-cps-base
+      # - Sogeti-Service-Center/terraform-aws-buildingblocks
+      # - Sogeti-Service-Center/terraform-aws-feature-psw-iamrotation
+      # - Sogeti-Service-Center/terraform-aws-feature-psw-scheduling
+      # - Sogeti-Service-Center/terraform-aws-feature-customerfoundation-vulnerabilityscanning
+      # - Sogeti-Service-Center/terraform-aws-feature-cps-platformsecurityservice
+      # - Sogeti-Service-Center/terraform-aws-feature-cps-platformmonitoring
+      # - Sogeti-Service-Center/terraform-aws-feature-cps-accessmanagement
+      # - Sogeti-Service-Center/terraform-aws-feature-cps-controlsandguardrails
+      # - Sogeti-Service-Center/terraform-aws-feature-cps-platformlifecyclemanagement
+      # - Sogeti-Service-Center/terraform-aws-feature-psw-updatemanagement
+      # - Sogeti-Service-Center/terraform-aws-feature-ces-database
+      # - Sogeti-Service-Center/terraform-aws-feature-psw-monitoringasaservice
+      # - Sogeti-Service-Center/terraform-aws-feature-psw-workloadlogging
+      # - Sogeti-Service-Center/terraform-aws-feature-psw-configurationmanagement
+      # - Sogeti-Service-Center/terraform-aws-feature-psw-endpointprotection
     files:
-      - src: workflows/tilt.yaml
-        dest: .github/workflows/tilt.yaml
       - src: workflows/auto-merge-syncs.yaml
         dest: .github/workflows/auto-merge-syncs.yaml
-
-  - repos:
-      - deltaprojects/ci-cd-java
-      - deltaprojects/teichmuller
-      - deltaprojects/dooh
-      - deltaprojects/cmp-api
-      - deltaprojects/madoff-streams
-      - deltaprojects/user-sync
-      - deltaprojects/user-identification
-      - deltaprojects/delta-tukeyproxy
-      - deltaprojects/rainbow
-    files:
-      - src: workflows/ci-cd-java/release.sh
-        dest: bin/release.sh
-      - src: workflows/ci-cd-java/ci-cd-config.yaml
-        dest: ci-cd-config.yaml.template
-      - src: workflows/ci-cd-java/maven-settings.xml
-        dest: .github/maven-settings.xml
-      - src: workflows/ci-cd-java/docker-release.sh
-        dest: .github/docker-release.sh
-      - src: workflows/ci-cd-java/perform-release.sh
-        dest: .github/perform-release.sh
-      - src: workflows/ci-cd-java/build-test-release.yml
-        dest: .github/workflows/build-test-release.yml
-      - src: workflows/ci-cd-java/delta-k8s-deploy.yml
-        dest: .github/workflows/delta-k8s-deploy.yml

@@ -1,0 +1,58 @@
+name: Publish Modules
+on:
+  release:
+
+
+jobs:
+  build-matrix:
+    name: Determine modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - id: set-matrix
+        run: echo "::set-output name=modules::$(find . -maxdepth 2 -mindepth 2 -type f -name 'main.tf' | sed -r 's|/[^/]+$||' |sort |uniq |jq -c --slurp --raw-input 'split("\n") | [.[] | select(. != "")]')"
+        
+    outputs:
+      modules: ${{ steps.set-matrix.outputs.modules }}
+
+  upload-modules:
+    needs: build-matrix
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        module: ${{ fromJson(needs.build-matrix.outputs.modules) }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+        aws-region: eu-west-1
+    
+    - name: Install Phase
+      run: |
+          echo Entering install phase..
+          sudo apt-get -y install unzip zip awscli
+    
+    - name: Create Zip
+      run: |
+          echo Creating ZIP phase..
+          cd ${{ matrix.module }}
+          zip -r $HOME/${{ matrix.module }}.zip *
+
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+    
+    - name: Upload to S3
+      run: |
+          echo Upload to S3 phase..
+          aws s3 cp $HOME/${{ matrix.module }}.zip s3://awslz-module-store/$GITHUB_REPOSITORY/${{ steps.get_version.outputs.VERSION }}/${{ matrix.module }}.zip
