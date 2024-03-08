@@ -16,7 +16,7 @@ jobs:
           echo PR #${{ github.event.number }} has been merged
       - name: Checkout repository
         uses: actions/checkout@v4
-      - uses: connor-baer/action-sync-branch@v1.0.3
+      - uses: connor-baer/action-sync-branch@v1.1.0
         with:
           branch: dev
           token: ${{ secrets.GITHUB_TOKEN }}
