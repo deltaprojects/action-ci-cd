@@ -1,7 +1,12 @@
 <settings>
   <servers>
     <server>
-      <id>bucketrepo</id>
+      <id>artifactory.deltaprojects.net</id>
+      <username>${env.MAVEN_USERNAME}</username>
+      <password>${env.MAVEN_PASSWORD}</password>
+    </server>
+    <server>
+      <id>artifactory.deltaprojects.net-snapshots</id>
       <username>${env.MAVEN_USERNAME}</username>
       <password>${env.MAVEN_PASSWORD}</password>
     </server>
@@ -11,14 +16,6 @@
       <password>${env.MVN_REPOSITORY_PASSWORD}</password>
     </server>
   </servers>
-  <mirrors>
-    <mirror>
-      <id>bucketrepo</id>
-      <name>bucketrepo mirror</name>
-      <url>https://maven.deltaprojects.net/bucketrepo/</url>
-      <mirrorOf>mavenrepo.service.delta.prod,mavenrepo.service.delta.prod-snapshots</mirrorOf>
-    </mirror>
-  </mirrors>
   <profiles>
     <profile>
       <id>ci</id>
@@ -31,22 +28,17 @@
           </snapshots>
         </repository>
         <repository>
-          <id>bucketrepo</id>
-          <name>bucketrepo</name>
-          <url>https://maven.deltaprojects.net/bucketrepo/</url>
-        </repository>
-        <repository>
-          <id>mavenrepo.service.delta.prod</id>
+          <id>artifactory.deltaprojects.net</id>
           <name>libs-releases</name>
-          <url>http://mavenrepo.service.delta.prod/artifactory/libs-releases</url>
+          <url>https://artifactory.deltaprojects.net/artifactory/libs-releases-local/</url>
           <snapshots>
             <enabled>false</enabled>
           </snapshots>
         </repository>
         <repository>
-          <id>mavenrepo.service.delta.prod-snapshots</id>
+          <id>artifactory.deltaprojects.net-snapshots</id>
           <name>libs-snapshots</name>
-          <url>http://mavenrepo.service.delta.prod/artifactory/libs-snapshots</url>
+          <url>https://artifactory.deltaprojects.net/artifactory/libs-snapshots-local/</url>
         </repository>
       </repositories>
     </profile>
