@@ -40,6 +40,8 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.MVN_MIRROR_USER }}
           MAVEN_PASSWORD: ${{ secrets.MVN_MIRROR_PASSWORD }}
+          MAVEN_REPO_USERNAME: ${{ secrets.MVN_REPO_USER }}
+          MAVEN_REPO_PASSWORD: ${{ secrets.MVN_REPO_PASSWORD }}
           MVN_REPOSITORY_USERNAME: ${{ secrets.MVN_REPOSITORY_USERNAME }}
           MVN_REPOSITORY_PASSWORD: ${{ secrets.MVN_REPOSITORY_TOKEN }}
 
@@ -66,5 +68,7 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.MVN_MIRROR_USER }}
           MAVEN_PASSWORD: ${{ secrets.MVN_MIRROR_PASSWORD }}
+          MAVEN_REPO_USERNAME: ${{ secrets.MVN_REPO_USER }}
+          MAVEN_REPO_PASSWORD: ${{ secrets.MVN_REPO_PASSWORD }}
           MVN_REPOSITORY_USERNAME: ${{ secrets.MVN_REPOSITORY_USERNAME }}
           MVN_REPOSITORY_PASSWORD: ${{ secrets.MVN_REPOSITORY_TOKEN }}

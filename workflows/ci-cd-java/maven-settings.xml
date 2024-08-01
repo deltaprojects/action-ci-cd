@@ -1,14 +1,19 @@
 <settings>
   <servers>
     <server>
-      <id>artifactory.deltaprojects.net</id>
+      <id>bucketrepo</id>
       <username>${env.MAVEN_USERNAME}</username>
       <password>${env.MAVEN_PASSWORD}</password>
     </server>
     <server>
       <id>artifactory.deltaprojects.net-snapshots</id>
-      <username>${env.MAVEN_USERNAME}</username>
-      <password>${env.MAVEN_PASSWORD}</password>
+      <username>${env.MAVEN_REPO_USERNAME}</username>
+      <password>${env.MAVEN_REPO_PASSWORD}</password>
+    </server>
+    <server>
+      <id>artifactory.deltaprojects.net</id>
+      <username>${env.MAVEN_REPO_USERNAME}</username>
+      <password>${env.MAVEN_REPO_PASSWORD}</password>
     </server>
     <server>
       <id>github</id>
@@ -16,6 +21,14 @@
       <password>${env.MVN_REPOSITORY_PASSWORD}</password>
     </server>
   </servers>
+  <mirrors>
+    <mirror>
+      <id>bucketrepo</id>
+      <name>bucketrepo mirror</name>
+      <url>https://maven.deltaprojects.net/bucketrepo/</url>
+      <mirrorOf>mavenrepo.service.delta.prod,mavenrepo.service.delta.prod-snapshots</mirrorOf>
+    </mirror>
+  </mirrors>
   <profiles>
     <profile>
       <id>ci</id>
@@ -39,6 +52,24 @@
           <id>artifactory.deltaprojects.net-snapshots</id>
           <name>libs-snapshots</name>
           <url>https://artifactory.deltaprojects.net/artifactory/libs-snapshots-local/</url>
+        </repository>
+        <repository>
+          <id>bucketrepo</id>
+          <name>bucketrepo</name>
+          <url>https://maven.deltaprojects.net/bucketrepo/</url>
+        </repository>
+        <repository>
+          <id>mavenrepo.service.delta.prod</id>
+          <name>libs-releases</name>
+          <url>http://mavenrepo.service.delta.prod/artifactory/libs-releases</url>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>mavenrepo.service.delta.prod-snapshots</id>
+          <name>libs-snapshots</name>
+          <url>http://mavenrepo.service.delta.prod/artifactory/libs-snapshots</url>
         </repository>
       </repositories>
     </profile>
