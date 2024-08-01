@@ -6,6 +6,16 @@
       <password>${env.MAVEN_PASSWORD}</password>
     </server>
     <server>
+      <id>artifactory.deltaprojects.net-snapshots</id>
+      <username>${env.MAVEN_REPO_USERNAME}</username>
+      <password>${env.MAVEN_REPO_PASSWORD}</password>
+    </server>
+    <server>
+      <id>artifactory.deltaprojects.net</id>
+      <username>${env.MAVEN_REPO_USERNAME}</username>
+      <password>${env.MAVEN_REPO_PASSWORD}</password>
+    </server>
+    <server>
       <id>github</id>
       <username>${env.MVN_REPOSITORY_USERNAME}</username>
       <password>${env.MVN_REPOSITORY_PASSWORD}</password>
@@ -29,6 +39,19 @@
           <snapshots>
             <enabled>true</enabled>
           </snapshots>
+        </repository>
+        <repository>
+          <id>artifactory.deltaprojects.net</id>
+          <name>libs-releases</name>
+          <url>https://artifactory.deltaprojects.net/artifactory/libs-releases-local/</url>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>artifactory.deltaprojects.net-snapshots</id>
+          <name>libs-snapshots</name>
+          <url>https://artifactory.deltaprojects.net/artifactory/libs-snapshots-local/</url>
         </repository>
         <repository>
           <id>bucketrepo</id>
