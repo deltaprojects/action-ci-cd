@@ -50,7 +50,7 @@ runs:
         TILT_VERSION: 'v0.33.6'
         # renovate: datasource=github-releases depName=rancher/cli
         RANCHER_VERSION: 'v2.7.7'
-      uses: yokawasa/action-setup-kube-tools@v0.9.3
+      uses: yokawasa/action-setup-kube-tools@v0.11.1
       with:
         tilt: ${{ env.TILT_VERSION }}
         rancher: ${{ env.RANCHER_VERSION }}
